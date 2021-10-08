@@ -90,6 +90,7 @@ if [ ${CONFIGURED} -eq 0 ] ; then
 
   # run the container for the first time
   docker run --name ${CONTAINERNAME} \
+   --restart always \
    -p ${PORT}:1680/udp \
    -v ${CONFDIR}:/opt/helium_gateway \
    -e HELIUM_RS_ZONE=${ZONE} \
@@ -107,6 +108,7 @@ else
   docker stop ${CONTAINERNAME}
   docker rm ${CONTAINERNAME}
   docker run --name ${CONTAINERNAME} \
+   --restart always \
    -p ${PORT}:1680/udp \
    -v ${CONFDIR}:/opt/helium_gateway \
    -d gateway-rs  
