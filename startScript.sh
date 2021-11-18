@@ -35,16 +35,19 @@ if [ ! -f ${TARGET_DIR}/default.toml ] ; then
   mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.bak
   ( echo "keypair = \"${TARGET_DIR}/gateway_key.bin\"" ; cat ${TARGET_DIR}/settings.bak ) > ${TARGET_DIR}/settings.toml
 
+  /usr/bin/helium_gateway -c ${TARGET_DIR} server &
+  sleep 3
+
   # Make the gateway key to be created
-  /usr/bin/helium_gateway -c /opt/helium_gateway key info
+  /usr/bin/helium_gateway -c ${TARGET_DIR} key info
   GWNAME=`/usr/bin/helium_gateway -c ${TARGET_DIR} key info | grep name | tr -s " " | cut -d ':' -f 2 | sed -e 's/[ \"]//g'` 
   touch ${TARGET_DIR}/$GWNAME
+
 
   # Display the registration transaction
   if [ ! -z "${HELIUM_RS_OWNER}" ] && [ ! -z "${HELIUM_RS_PAYER}" ] ; then
    /usr/bin/helium_gateway -c ${TARGET_DIR} add --owner ${HELIUM_RS_OWNER}  --payer ${HELIUM_RS_PAYER}
   fi 
- 
-fi
-
-/usr/bin/helium_gateway -c ${TARGET_DIR} server
+else
+   /usr/bin/helium_gateway -c ${TARGET_DIR} server
+fi 

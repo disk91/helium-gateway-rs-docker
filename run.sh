@@ -98,7 +98,8 @@ if [ ${CONFIGURED} -eq 0 ] ; then
    -e HELIUM_RS_OWNER=${OWNER} \
    -e HELIUM_RS_PAYER=${PAYER} \
    -d gateway-rs 
-  sleep 2
+  echo '### Please Wait ###'
+  sleep 20
   docker logs ${CONTAINERNAME} 
 
 else
