@@ -31,9 +31,15 @@ if [ ! -f ${TARGET_DIR}/default.toml ] ; then
   cat ${TARGET_DIR}/settings.bak | sed -e 's/syslog/stdio/' > ${TARGET_DIR}/settings.toml
   rm ${TARGET_DIR}/settings.bak
 
+  # Change the listener
+  mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.bak
+  cat ${TARGET_DIR}/settings.bak | sed -e 's/listen_addr/listen/' > ${TARGET_DIR}/settings.toml
+  rm ${TARGET_DIR}/settings.bak
+
   # Change the key path
   mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.bak
   ( echo "keypair = \"${TARGET_DIR}/gateway_key.bin\"" ; cat ${TARGET_DIR}/settings.bak ) > ${TARGET_DIR}/settings.toml
+  rm ${TARGET_DIR}/settings.bak
 
   /usr/bin/helium_gateway -c ${TARGET_DIR} server &
   sleep 3
@@ -42,7 +48,6 @@ if [ ! -f ${TARGET_DIR}/default.toml ] ; then
   /usr/bin/helium_gateway -c ${TARGET_DIR} key info
   GWNAME=`/usr/bin/helium_gateway -c ${TARGET_DIR} key info | grep name | tr -s " " | cut -d ':' -f 2 | sed -e 's/[ \"]//g'` 
   touch ${TARGET_DIR}/$GWNAME
-
 
   # Display the registration transaction
   if [ ! -z "${HELIUM_RS_OWNER}" ] && [ ! -z "${HELIUM_RS_PAYER}" ] ; then
