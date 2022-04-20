@@ -16,7 +16,7 @@ RUN \
 	rm -rf /var/lib/apt/lists/*
 
 # Install getway-rs 
-RUN wget https://github.com/helium/gateway-rs/releases/download/v1.0.0-alpha.21/helium-gateway-v1.0.0-alpha.21-x86_64.deb
+RUN wget https://github.com/helium/gateway-rs/releases/download/v1.0.0-alpha.23/helium-gateway-v1.0.0-alpha.23-x86_64.deb
 RUN dpkg -i helium-gateway-*-x86_64.deb
 
 # Copy startup script 
