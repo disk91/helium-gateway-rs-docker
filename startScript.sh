@@ -55,13 +55,20 @@ if [ ! -f ${TARGET_DIR}/default.toml ] ; then
   fi 
 else
 
+   # resync he default.toml file
+   if ! diff /etc/helium_gateway/default.toml ${TARGET_DIR}/default.toml ; then
+      echo "update default.toml"
+      cp ${TARGET_DIR}/default.toml ${TARGET_DIR}/default.toml.bak
+      cp /etc/helium_gateway/default.toml ${TARGET_DIR}/default.toml
+   fi
+
    # Process to configuration file update
-   # start from version 0.21
-   if ! grep "api.*4476" ${TARGET_DIR}/default.toml >/dev/null 2>/dev/null ; then
-     echo "update to beta-22"
-     cp ${TARGET_DIR}/default.toml ${TARGET_DIR}/default.toml.bak
-     sed '/^listen.*/a api=4476' ${TARGET_DIR}/default.toml.bak > ${TARGET_DIR}/default.toml 
-   fi    
+   # start from version 0.21 - this one should not be executed anymore
+   #if ! grep "api.*4476" ${TARGET_DIR}/default.toml >/dev/null 2>/dev/null ; then
+   #  echo "update to beta-22"
+   #  cp ${TARGET_DIR}/default.toml ${TARGET_DIR}/default.toml.bak
+   #  sed '/^listen.*/a api=4476' ${TARGET_DIR}/default.toml.bak > ${TARGET_DIR}/default.toml 
+   #fi    
 
    /usr/bin/helium_gateway -c ${TARGET_DIR} server
 fi 
