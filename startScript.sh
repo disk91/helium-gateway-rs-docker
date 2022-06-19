@@ -55,7 +55,7 @@ if [ ! -f ${TARGET_DIR}/default.toml ] ; then
   fi 
 else
 
-   # resync he default.toml file
+   # resync the default.toml file
    if ! diff /etc/helium_gateway/default.toml ${TARGET_DIR}/default.toml ; then
       echo "update default.toml"
       cp ${TARGET_DIR}/default.toml ${TARGET_DIR}/default.toml.bak
