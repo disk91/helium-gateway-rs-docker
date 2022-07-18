@@ -3,7 +3,7 @@ ARG SYSTEM_TIMEZONE="Europe/London"
 FROM ubuntu:latest
 
 WORKDIR /opt/gateway-rs
-ENV VERSION=v1.0.0-alpha.27
+ENV VERSION=v1.0.0-alpha.28
 
 # Install dependencies 
 RUN \
