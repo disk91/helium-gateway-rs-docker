@@ -49,7 +49,7 @@ Now you need to make the hotspot registration, using the helium wallet cli corre
 
 Then you need to give it a location
 ```
-./helium-wallet hotspots assert --gateway <GATEWAY_ADRESSS_ID> --lat XX.XXXX --lon Y.YYYY -mode dataonly --commit
+./helium-wallet hotspots assert --gateway <GATEWAY_ADRESSS_ID> --lat XX.XXXX --lon Y.YYYY  --mode dataonly --commit
 ```
 
 ## restart an instance
