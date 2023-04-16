@@ -11,7 +11,7 @@ fi
 
 if [ -f ${BIN_DIR}/v1.0.2 ] ; then
   # New version 1.0.2
-  if [ ! -f ${TARGET_DIR}/default.toml ] ; then
+  if [ -f ${TARGET_DIR}/default.toml ] ; then
    # Backup previous Setting file if previous config exists
    mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.toml.v0.0.x
    mv ${TARGET_DIR}/default.toml ${TARGET_DIR}/default.toml.v0.0.x
@@ -44,7 +44,7 @@ if [ -f ${BIN_DIR}/v1.0.2 ] ; then
 
      # Get the key information
      ${BIN_DIR}/helium_gateway -c ${TARGET_DIR} key info
-     GWNAME=`/usr/bin/helium_gateway -c ${TARGET_DIR} key info | grep name | tr -s " " | cut -d ':' -f 2 | sed -e 's/[ \"]//g'`
+     GWNAME=`${BIN_DIR}/helium_gateway -c ${TARGET_DIR} key info | grep name | tr -s " " | cut -d ':' -f 2 | sed -e 's/[ \"]//g'`
      touch ${TARGET_DIR}/$GWNAME
 
      # Display the registration transaction
