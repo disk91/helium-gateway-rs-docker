@@ -13,6 +13,7 @@ if [ -f ${BIN_DIR}/v1.0.2 ] ; then
   # New version 1.0.2
   if [ -f ${TARGET_DIR}/default.toml ] ; then
    # Backup previous Setting file if previous config exists
+   echo "backup previous config files"
    mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.toml.v0.0.x
    mv ${TARGET_DIR}/default.toml ${TARGET_DIR}/default.toml.v0.0.x
   fi
@@ -25,7 +26,7 @@ if [ -f ${BIN_DIR}/v1.0.2 ] ; then
    if [ ! -z "${HELIUM_RS_ZONE}" ] ; then
     echo "Setting up Zone for ${HELIUM_RS_ZONE}"
     mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.bak
-    (echo "region=\"${HELIUM_RS_ZONE}\"" ; cat ${TARGET_DIR}/settings.bak ) > ${TARGET_DIR}/settings.toml
+    (echo "region = \"${HELIUM_RS_ZONE}\"" ; cat ${TARGET_DIR}/settings.bak ) > ${TARGET_DIR}/settings.toml
    fi
    # Change the listener
    mv ${TARGET_DIR}/settings.toml ${TARGET_DIR}/settings.bak
@@ -39,25 +40,24 @@ if [ -f ${BIN_DIR}/v1.0.2 ] ; then
 
    # is that a new instance ?
    if [ ! -f ${TARGET_DIR}/gateway_key.bin ] ; then
-     ${BIN_DIR}/helium_gateway -c ${TARGET_DIR} server &
+     ${BIN_DIR}/helium_gateway -c ${TARGET_DIR}/settings.toml server &
      sleep 3
 
      # Get the key information
-     ${BIN_DIR}/helium_gateway -c ${TARGET_DIR} key info
-     GWNAME=`${BIN_DIR}/helium_gateway -c ${TARGET_DIR} key info | grep name | tr -s " " | cut -d ':' -f 2 | sed -e 's/[ \"]//g'`
+     ${BIN_DIR}/helium_gateway -c ${TARGET_DIR}/settings.toml key info
+     GWNAME=`${BIN_DIR}/helium_gateway -c ${TARGET_DIR}/settings.toml key info | grep name | tr -s " " | cut -d ':' -f 2 | sed -e 's/[ \"]//g'`
      touch ${TARGET_DIR}/$GWNAME
 
      # Display the registration transaction
      if [ ! -z "${HELIUM_RS_OWNER}" ] && [ ! -z "${HELIUM_RS_PAYER}" ] ; then
-       ${BIN_DIR}/helium_gateway -c ${TARGET_DIR} add --owner ${HELIUM_RS_OWNER}  --payer ${HELIUM_RS_PAYER}
+       ${BIN_DIR}/helium_gateway -c ${TARGET_DIR}/settings.toml add --owner ${HELIUM_RS_OWNER}  --payer ${HELIUM_RS_PAYER} --mode dataonly
      fi
    else
      # run a previously created gateway-rs
-     ${BIN_DIR}/helium_gateway -c ${TARGET_DIR} server
+     ${BIN_DIR}/helium_gateway -c ${TARGET_DIR}/settings.toml server
    fi
   else
     # normal case, restarting a gateway-rs
-    ${BIN_DIR}/helium_gateway -c ${TARGET_DIR} server
+    ${BIN_DIR}/helium_gateway -c ${TARGET_DIR}/settings.toml server
   fi
 fi
-
