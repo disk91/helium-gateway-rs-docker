@@ -3,7 +3,7 @@ ARG SYSTEM_TIMEZONE="Europe/London"
 FROM ubuntu:latest
 
 WORKDIR /opt/gateway-rs
-ENV VERSION=v1.0.2
+ENV VERSION=1.0.2
 
 # Install dependencies 
 RUN \
@@ -16,10 +16,10 @@ RUN \
 	rm -rf /var/lib/apt/lists/*
 
 # Install getway-rs 
-RUN wget https://github.com/helium/gateway-rs/releases/download/${VERSION}/helium-gateway-${VERSION}-x86_64-unknown-debian-gnu.tar.gz
+RUN wget https://github.com/helium/gateway-rs/releases/download/v${VERSION}/helium-gateway-${VERSION}-x86_64-unknown-debian-gnu.tar.gz
 RUN tar -zxvf *.tar.gz -C /opt/gateway-rs
 RUN rm helium-gateway-*.tar.gz
-RUN touch ${VERSION}
+RUN touch v${VERSION}
 
 # Copy startup script 
 COPY startScript.sh .
