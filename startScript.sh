@@ -9,8 +9,8 @@ if [ ! -d ${TARGET_DIR} ] ; then
   exit 1
 fi
 
-if [ -f ${BIN_DIR}/v1.1.1 ] ; then
-  # New version 1.1.1
+if [ -f ${BIN_DIR}/v1.3.0 ] ; then
+  # New version 1.3.0
   if [ -f ${TARGET_DIR}/default.toml ] ; then
    # Backup previous Setting file if previous config exists
    echo "backup previous config files"
