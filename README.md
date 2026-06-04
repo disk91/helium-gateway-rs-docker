@@ -44,7 +44,7 @@ The container name is integrating the configuration path to easily find it. The 
 
 Now you need to make the hotspot registration, using the helium wallet cli corresponding to the owner/payer previously setup
 ```
-./helium-wallet hotspots add <txn obtained previously> --commit
+./helium-wallet hotspots add iot <txn obtained previously> --commit
 ```
 
 Then you need to give it a location
